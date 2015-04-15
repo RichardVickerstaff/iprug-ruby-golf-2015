@@ -42,6 +42,8 @@ class Golf
     c.sort.map{|k,v|"#{k}: #{v}"}.join"\n"
   end
 
-  def hole_9 h
+  def hole_9 t
+    k=t.first[1].first[1].keys
+    Hash[k.zip(t.flat_map{|h|h[1].map{|j|j[1]}}.map{|h|h.values_at(*k)}.transpose.map{|v|v.inject(:+)})]
   end
 end
