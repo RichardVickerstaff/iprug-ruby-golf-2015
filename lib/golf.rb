@@ -24,9 +24,8 @@ class Golf
     (m+l)*2+m+" dear #{n}\n"+m+l.chomp
   end
 
-  def hole_7 w,c
-    a=('A'..'Z').to_a
-    w.upcase.gsub(/\W/,'').chars.map{|l|Hash[a.zip(a.rotate(c))][l]}.each_slice(5).map(&:join).join' '
+  def hole_7 a,n
+    a.gsub(/\W/,"").upcase.bytes.map{|x|(x-65+n)%26+65}.map(&:chr).each_slice(5).map(&:join).join" "
   end
 
   def hole_8 s
