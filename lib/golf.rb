@@ -1,8 +1,7 @@
 class Golf
   def hole_1 c
-    s=c.upcase==c ? 'A':'a'
     i=0
-    (s..c).map{|l|l*i+=1}.join"\n"
+    ((c>?Z??a:?A)..c).map{|l|l*i+=1}.join"\n"
   end
 
   def hole_2 w
@@ -21,7 +20,7 @@ class Golf
   end
 
   def hole_5 a,b
-    a=[a,b].map{|i|i.upcase.gsub(/[ ()!-]/,'').each_char.sort}
+    a=[a,b].map{|i|i.upcase.gsub(/\W/,'').each_char.sort}
     a[1]==a[0]
   end
 
@@ -33,17 +32,14 @@ class Golf
 
   def hole_7 w,c
     a=('A'..'Z').to_a
-    w.upcase.gsub(/[ ?:)-]/,'').chars.map{|l|Hash[a.zip(a.rotate(c))][l]}.each_slice(5).map(&:join).join' '
+    w.upcase.gsub(/\W/,'').chars.map{|l|Hash[a.zip(a.rotate(c))][l]}.each_slice(5).map(&:join).join' '
   end
 
   def hole_8 s
-    c=Hash[('A'..'Z').zip([0]*26)]
-    s.gsub(/[ !\.'?]/,'').upcase.chars.each{|w|c[w]+=1}
-    c.sort.map{|k,v|"#{k}: #{v}"}.join"\n"
+    (?A..?Z).map{|c|"#{c}: #{s.upcase.count c}"}.join"\n"
   end
 
-  def hole_9 t
-    k=t.first[1].first[1].keys
-    Hash[k.zip(t.flat_map{|h|h[1].map{|j|j[1]}}.map{|h|h.values_at(*k)}.transpose.map{|v|v.inject(:+)})]
+  def hole_9 h
+    h.values.flat_map(&:values).inject{|i,j|i.map{|k,v|[k,v+j[k]]}}.to_h
   end
 end
